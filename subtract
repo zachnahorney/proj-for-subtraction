@@ -1,0 +1,160 @@
+#define VALUE 9999
+#include <iostream>
+#include <cctype>
+#include <cstring>
+using namespace std;
+class largeInteger
+{
+public:
+
+largeInteger operator-(largeInteger)const;//for subtraction
+
+void Input();//gets value from user
+void Output();//stores the value
+largeInteger();//constructer
+private:
+int integervalue[ VALUE ];//limits array size to 10000
+int val;//value for calculations
+};
+
+
+largeInteger largeInteger::operator-(const largeInteger b )const//function using the operator for subtraction
+
+
+{
+
+    largeInteger temp;
+
+    int c;
+
+    if(val>b.val)
+
+        c=val;
+
+    else
+
+        c=b.val;
+
+    int take= 0;
+
+    for( int i = c; i >= 0; i--)
+
+        if(take==0)
+
+        {
+
+            if(integervalue[i]>=b.integervalue[i])
+
+                temp.integervalue[i]=integervalue[i]-b.integervalue[i];
+
+            else
+
+            {
+
+                take=1;
+
+                temp.integervalue[i]=integervalue[i]+10-b.integervalue[i];
+
+            }
+
+        }
+
+        else
+
+        {
+           take=0;
+
+            if(integervalue[i]-1>=b.integervalue[i])
+
+                temp.integervalue[i]=integervalue[i]-b.integervalue[i];
+
+            else
+
+            {
+
+                take=1;
+
+                temp.integervalue[i]=integervalue[i]+VALUE-b.integervalue[i];
+
+            }
+
+        }
+
+    temp.val=c;
+
+    return temp;
+}
+largeInteger::largeInteger( )// constructor
+
+{
+
+    for ( int i = 0; i <VALUE; i++ )
+
+        integervalue[ i ] = 0;
+
+    val=VALUE-1;
+
+}
+void largeInteger::Input()//used for data entry
+
+{
+
+    string digit;
+
+    int a,b,c;
+
+    cout<<"Enter a number(NOTE: smaller number first if not the number overflows for subtraction)"<<endl;
+
+    cin>>digit;
+
+    for(a=0; digit[a]!='\0'; a++);//
+
+    val=a;
+
+    c=0;
+
+    for(b=a-1; b>=0; b--)
+
+        integervalue[b]=digit[c++]-48;
+
+}
+void largeInteger::Output()
+
+{
+
+    int i;
+
+    for (i=val-1; i >= 0; i-- )
+    {
+        cout<<integervalue[i];
+    }
+
+
+}
+int main()
+
+{
+    int c, choice;
+    largeInteger first,second,out;
+    first.Input();//user inputs first number
+    second.Input();//user inputs second number
+    // loops interface 6 times before it quits out
+
+
+         first.Output();
+
+    cout <<" - ";
+
+    second.Output();
+
+ out=first - second;
+
+    cout<< " = " ;
+
+    out.Output();
+    cout<< " " <<endl;
+
+
+    return 0;
+}
+
